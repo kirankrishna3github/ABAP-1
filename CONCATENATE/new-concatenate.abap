@@ -16,10 +16,10 @@ DATA: lv_data1 TYPE string VALUE 'SAP',
 
 CONCATENATE 'VALUE 1 =' lv_data1 ',' 'VALUE 2 =' lv_data2 INTO lv_data3.
 
-WRITE: / lv_data.
+WRITE: / lv_data3.
 
 "Ahora
 
-lv_data = |VALUE 1 = { lv_data1 },| && |VALUE 2 = { lv_data2 }. |.
+lv_data3 = |VALUE 1 = { lv_data1 },| && |VALUE 2 = { lv_data2 }. |.
 
-WRITE: / lv_data.
+WRITE: / lv_data3.
