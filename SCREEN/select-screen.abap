@@ -102,12 +102,8 @@ p_soc4 TYPE ztc_energia_mwh-bukrs MODIF ID sc3 DEFAULT 'PROF', " Sociedad
 p_ejer2 TYPE ztc_energia_mwh-gjahr MODIF ID eje OBLIGATORY, " Ejercicio
 p_per2 TYPE ztc_energia_mwh-poper MODIF ID ped OBLIGATORY, " Periodo
 p_ver2 TYPE  ztc_energia_mwh-version MODIF ID vrn OBLIGATORY, " Version
-*{ REPLACE @MOD001
-*  p_courea(13) TYPE p DECIMALS 3 MODIF ID CO," ceco = 700300 Urea
-*  p_conh3(13) TYPE p DECIMALS 3 MODIF ID co2." ceco = 700210 Amoniaco
-p_courea(13) TYPE p DECIMALS 3 MODIF ID co OBLIGATORY," ceco = 700300 Urea
-p_conh3(13) TYPE p DECIMALS 3 MODIF ID co2 OBLIGATORY." ceco = 700210 Amoniaco
-*} REPLACE @MOD001
+p_courea(13) TYPE p DECIMALS 3 MODIF ID co OBLIGATORY,
+p_conh3(13) TYPE p DECIMALS 3 MODIF ID co2 OBLIGATORY.
 
 SELECTION-SCREEN END OF BLOCK b4.
 
@@ -147,12 +143,7 @@ SELECTION-SCREEN END OF LINE.
 SELECT-OPTIONS: so_p_ind FOR ztc_energia_peso-poper NO INTERVALS NO-EXTENSION MODIF ID so1,
 so_a_men FOR ztc_energia_peso-poper MODIF ID so2.
 
-*{ delete @mod002
-* Inicio ALEX2
-*PARAMETERS: p_ukurs TYPE ukurs_d MODIF ID SO2. " VISIBLE LENGTH 13.
-*  PARAMETERS: P_UKURS TYPE p DECIMALS 5 MODIF ID SO1.
-* Fin
-*} delete @mod002
+
 SELECTION-SCREEN END OF BLOCK b5.
 
 " Pantalla reporte consumo agua
@@ -187,8 +178,8 @@ p_tcr(13) TYPE p DECIMALS 4 MODIF ID tcr," Tarifa consumo real
 p_tdn(13) TYPE p DECIMALS 4 MODIF ID tdn, " Tarifa disponibilidad neta
 p_cr TYPE ztc_agua-consreal MODIF ID cr, " consumo real m3
 p_cad TYPE ztc_agua-consdiario MODIF ID cad, " consumo asegurado m3 diario
-p_agurea TYPE ztc_agua-valor MODIF ID co3," ceco = 700300 Urea
-p_agnh3 TYPE ztc_agua-valor MODIF ID co4." ceco = 700210 Amoniaco
+p_agurea TYPE ztc_agua-valor MODIF ID co3,"
+p_agnh3 TYPE ztc_agua-valor MODIF ID co4." 
 
 SELECTION-SCREEN END OF BLOCK b3.
 
@@ -378,7 +369,7 @@ p_ver_ag  .
 
 *Se emplea el evento de valor de respuesta especifico al campo.
 
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_prov." ZF012->ZGLR0002->ID:01->Proveedores EE
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_prov.
 
   IF lines( it_rango01 ) EQ 0.
 
@@ -419,7 +410,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_prov." ZF012->ZGLR0002->ID:01->Provee
     CLEAR wa_match.
   ENDIF.
 
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver1." ZF012->ZGLR0002->ID:05->Versión
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver1.
 
   IF lines( it_rango05 ) EQ 0.
 
@@ -460,7 +451,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver1." ZF012->ZGLR0002->ID:05->Versi�
     CLEAR wa_match.
   ENDIF.
 
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver2."ZF012->ZGLR0002->ID:05->Versión
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver2.
 
   REFRESH it_rango05.
 
@@ -501,7 +492,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver2."ZF012->ZGLR0002->ID:05->Versió
     CLEAR wa_match.
   ENDIF.
 
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_pro_ag." ZF012->ZGLR0002->ID:06->Proveedor de Agua
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_pro_ag.
 
   IF lines( it_rango06 ) EQ 0.
     CALL FUNCTION 'ZBC_OBTENER_ZF012'
@@ -541,7 +532,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_pro_ag." ZF012->ZGLR0002->ID:06->Prov
     CLEAR wa_match.
   ENDIF.
 
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver_ag." ZF012->ZGLR0002->ID:05->Version
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_ver_ag.
 
   REFRESH it_rango05.
 
