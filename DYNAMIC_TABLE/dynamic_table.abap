@@ -1,48 +1,38 @@
-REPORT zprueba003.
+REPORT  zejercicio.
 
-DATA: t_fieldcat TYPE lvc_t_fcat,
-t_fieldcat_wa TYPE LINE OF lvc_t_fcat.
+FIELD-SYMBOLS: <fs_itab> TYPE ANY TABLE,
+               <wa_itab> TYPE ANY.
 
-DATA: tabla TYPE REF TO data.
+DATA: r_linetype TYPE REF TO cl_abap_structdescr,
+      r_tabletype TYPE REF TO cl_abap_tabledescr,
+      key TYPE abap_keydescr_tab,
+      ref_itab TYPE REF TO data,
+      new_line TYPE REF TO data.
+
+PARAMETERS pa_tab TYPE dd02l-tabname DEFAULT 'ZTABLA_USUARIOS'.
 
 START-OF-SELECTION.
 
-t_fieldcat_wa-col_pos = '1'.
-t_fieldcat_wa-fieldname = 'DOCUM'.
-t_fieldcat_wa-ref_table = 'VBAK'.
-t_fieldcat_wa-ref_field = 'VBELN'.
-APPEND t_fieldcat_wa TO t_fieldcat.
-CLEAR t_fieldcat_wa.
+* Creamos un tipo de tabla utilizando RTTC
+  r_linetype ?= cl_abap_typedescr=>describe_by_name( pa_tab ).
+  r_tabletype = cl_abap_tabledescr=>create(
+  p_line_type = r_linetype ).
 
-t_fieldcat_wa-col_pos = '2'.
-t_fieldcat_wa-fieldname = 'POSIC'.
-t_fieldcat_wa-ref_table = 'VBAP'.
-t_fieldcat_wa-ref_field = 'POSNR'.
-APPEND t_fieldcat_wa TO t_fieldcat.
-CLEAR t_fieldcat_wa.
+* Creación dinamica de la tabla interna
+  CREATE DATA ref_itab TYPE HANDLE r_tabletype.
+  ASSIGN ref_itab->* TO <fs_itab>.
 
-t_fieldcat_wa-col_pos = '3'.
-t_fieldcat_wa-fieldname = 'STATU'.
-t_fieldcat_wa-ref_table = 'VBUK'.
-t_fieldcat_wa-ref_field = 'WBSTK'.
-APPEND t_fieldcat_wa TO t_fieldcat.
-CLEAR t_fieldcat_wa.
+* Creamos un area de trabajo de la estrcutura de la misma tabla
+  CREATE DATA new_line LIKE LINE OF <fs_itab>.
+  ASSIGN new_line->* TO <wa_itab>.
 
+  SELECT * FROM (pa_tab)
+  INTO TABLE <fs_itab>
+  UP TO 3 ROWS.
 
-CALL METHOD cl_alv_table_create=>create_dynamic_table
-EXPORTING
-* I_STYLE_TABLE =
-it_fieldcatalog = t_fieldcat
-* I_LENGTH_IN_BYTE =
-IMPORTING
-ep_table = tabla
-* E_STYLE_FNAME =
-* EXCEPTIONS
-* GENERATE_SUBPOOL_DIR_FULL = 1
-* others = 2
-.
-IF sy-subrc <> 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-* WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
-ENDIF.
+  LOOP AT <fs_itab> INTO <wa_itab>.
+
+    WRITE: / <wa_itab>.
+
+  ENDLOOP.
 
