@@ -7,5 +7,5 @@ Con AT END OF se ejecuta el bloque cuando el campo especificado alcanza su últi
 •	AT FIRST.…ENDAT.
 Con AT FIRST se ejecuta el bloque en la primera vuelta del LOOP.
 •	AT LAST.…ENDAT.
-Con AT LAST se ejecuta el bloque en la última vuelta del LOOP.
+Con AT LAST se ejecuta el bloque en la última vuelta del LOOP. 
 •	Dentro de ATNEW y ATEND OF, la sentencia SUM suma todos los campos numéricos de las entradas procesadas en estos bloques de proceso. Dentro de AT FIRST y AT LAST, suma los campos numéricos de todas las entradas de la tabla.
