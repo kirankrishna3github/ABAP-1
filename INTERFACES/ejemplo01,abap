@@ -1,0 +1,23 @@
+REPORT ytempo2.
+
+*----------------------------------------------------------------------*
+*       INTERFACE i_zf012
+*----------------------------------------------------------------------*
+*
+*----------------------------------------------------------------------*
+INTERFACE i_zf012.
+
+  TYPES:BEGIN OF ty_zf012.
+          INCLUDE TYPE zf012.
+  TYPES:END OF ty_zf012.
+
+ENDINTERFACE.                    "i_zf012
+
+
+DATA lv_programm TYPE i_zf012=>ty_zf012-programm.
+
+INITIALIZATION.
+
+  lv_programm = 'ZF012'.
+  
+  WRITE lv_programm.
