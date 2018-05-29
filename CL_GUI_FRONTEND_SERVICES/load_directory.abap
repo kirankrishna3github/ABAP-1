@@ -1,5 +1,7 @@
 *Selecting a Directory
 
+REPORT ytempo.
+
 *The following declaration may need to be 'gd_path(500) type c.' in older versions of SAP"
 DATA: gd_path TYPE string.
 
