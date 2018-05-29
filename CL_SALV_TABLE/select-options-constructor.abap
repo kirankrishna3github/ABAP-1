@@ -1,11 +1,12 @@
+CLASS cl_main DEFINITION.
+  
   METHODS: constructor IMPORTING
     i_somatnr  TYPE rseloption "select-option
     i_gart   TYPE c
     i_cen    TYPE C
-    i_fini   TYPE sy-datum,
-    view_alv IMPORTING i_exit_alv  LIKE it_exit_alv.
-
-  " INI Select-Option
+    i_fini   TYPE sy-datum.
+    
+ENDCLASS.    
 
   DATA :it_so TYPE rseloption,
         wa_so TYPE rsdsselopt.
@@ -19,8 +20,6 @@
       APPEND wa_so TO it_so.
 
   ENDLOOP.
-
-  "FIN Select-Option
 
   CREATE OBJECT ob_data
   EXPORTING
