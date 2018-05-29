@@ -1,0 +1,35 @@
+REPORT YTEMPO.
+
+DATA: t_modo TYPE spopli OCCURS 0 WITH HEADER LINE.
+  
+  t_modo-varoption = 'Modo Invisible'.
+  APPEND t_modo.
+  CLEAR t_modo.
+  t_modo-varoption = 'Sólo Errores'.
+  APPEND t_modo.
+  CLEAR t_modo.
+
+  CALL FUNCTION 'POPUP_TO_DECIDE_LIST'
+    EXPORTING
+      cursorline = 1
+      mark_max   = 2
+      start_col  = 0
+      start_row  = 0
+      textline1  = 'Modo de ejecución de carga'
+      titel      = 'Elija modo de carga'
+    TABLES
+      t_spopli   = t_modo.
+  IF sy-subrc <> 0.
+  ENDIF.
+
+  READ TABLE t_modo WITH KEY selflag = 'X'.
+  IF sy-subrc = 0.
+    CASE sy-tabix.
+      WHEN '1'.
+        gv_modo = 'N'.
+      WHEN '2'.
+        gv_modo = 'E'.
+    ENDCASE.
+  ELSE.
+    gv_modo = 'X'.
+  ENDIF.
